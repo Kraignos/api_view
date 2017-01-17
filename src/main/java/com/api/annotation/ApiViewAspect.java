@@ -39,13 +39,6 @@ public class ApiViewAspect {
         Object response = joinPoint.proceed();
         UsernamePasswordAuthenticationToken auth = (UsernamePasswordAuthenticationToken) request.getUserPrincipal();
         ObjectWriter writer = mapper.writerWithView(Views.resolveFromRole(auth.getAuthorities().iterator().next().getAuthority()));
-        /*if (request.isUserInRole(Role.ADMIN.name())) {
-            writer = mapper.writerWithView(Views.Admin.class);
-        } else if (request.isUserInRole(Role.MANAGER.name())) {
-            writer = mapper.writerWithView(Views.Manager.class);
-        } else {
-            writer = mapper.writerWithView(Views.BasicUser.class);
-        }*/
         return writer.writeValueAsString(response);
     }
 }
